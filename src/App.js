@@ -1,3 +1,4 @@
+/**
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
@@ -22,5 +23,16 @@ function App() {
     </div>
   );
 }
+
+export default App;
+*/
+import React from 'react';
+import YandexMap from './Map/index' // простое подключение карты
+
+const App = () => (
+  <div>
+    <YandexMap/>
+  </div>
+);
 
 export default App;
