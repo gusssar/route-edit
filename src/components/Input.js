@@ -7,6 +7,7 @@ export class Input extends React.Component {
             const nameDot=event.target.value;
             event.target.value='';
             this.props.setNameDot(nameDot);
+            this.props.addListDot(nameDot);
         }
     }
     render(){
@@ -23,4 +24,5 @@ export class Input extends React.Component {
 
 Input.propType = {
     setNameDot : PropTypes.func.isRequired,
+    addListDot : PropTypes.func.isRequired,
 }
