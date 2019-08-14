@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  render(){
+    const { sideBar } = this.props;
+    
+    return (
+      <div className="app">
+        <input placeholder='input'></input>
+        <div>{sideBar.nameDot}</div>
+      </div>
+    )
+  }
 }
 
-export default App;
+//приклеиваем данные из store
+const mapStateToStore = store => {
+  console.log(store)
+  return{
+    sideBar: store.sideBar
+  }
+}
+
+export default connect(
+  mapStateToStore
+)(App)
