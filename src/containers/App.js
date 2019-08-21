@@ -1,39 +1,45 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { Input } from '../components/Input'
-import { Output } from '../components/Output'
-import { setNameDot } from '../action/InputAction'
-import { addListDot } from '../action/InputAction'
+import { SideBar } from '../components/SideBar'
+import { MapView } from '../components/MapView'
+
+import './App.css';
 
 class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+        dots:[{name:'aaa',x:'0',y:'0'},{name:'bbb',x:'0',y:'0'}],
+    }
+  }
+
+  //добавление новой точки
+  setNameDot=(obj_name) => {
+    this.setState(state=>({...state.dots.push(obj_name)}))
+  }
+
+  //удаление точки
+  DeleteDot=(el) => {
+    this.setState(state=>({
+      ...state.dots.splice(
+        state.dots.findIndex(
+          (_el)=>_el===el),1)}))
+  }
+
   render(){
-    const { sideBar, setNameDotActions, addListDot } = this.props;
 
     return (
       <div className="app">
-        <Input setNameDot={setNameDotActions} addListDot={addListDot} nameDotList={sideBar.nameDotList}/>
-        <Output nameDot={sideBar.nameDot}/>
+        <SideBar 
+          dots={this.state.dots} 
+          setNameDot={this.setNameDot}
+          DeleteDot={this.DeleteDot}
+          />
+        <MapView/>
       </div>
     )
   }
 }
 
-//приклеиваем данные из store
-const mapStateToStore = store => {
-  console.log(store)
-  return{
-    sideBar: store.sideBar
-  }
-}
 
-const mapDispatchToProps = dispatch => {
-  return {
-    setNameDotActions: nameDot => dispatch(setNameDot(nameDot)),
-    addListDot: nameDot => dispatch(addListDot(nameDot))
-  }
-}
 
-export default connect(
-  mapStateToStore,
-  mapDispatchToProps
-)(App)
+export default App
