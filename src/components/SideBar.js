@@ -18,14 +18,30 @@ export class SideBar extends React.Component {
         this.props.DeleteDot(el);
     }
 
+    DragStart = (e, idx) => {
+        this.props.DragStart(e,idx);
+    }
+
+    DragOver = (idx) => {
+        this.props.DragOver(idx);
+    }
+
+    DragEnd = () => {
+        this.props.DragEnd();
+    }
+
     render(){
 
         const { dots } = this.props;
-        console.log('dots',dots)
+        // console.log('dots',dots)
 
         const item=(dots)?dots.map((el,idx)=>
             <div 
                 key={idx}
+                draggable
+                onDragStart={(e)=>this.DragStart(e, idx)}
+                onDragOver={() => this.DragOver(idx)}
+                onDragEnd={this.DragEnd}
                 >
                     {el.name}
                     <button onClick={()=>this.onDel(el)}>удалить {el.name}</button>

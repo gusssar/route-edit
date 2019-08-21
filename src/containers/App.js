@@ -25,6 +25,34 @@ class App extends React.Component {
           (_el)=>_el===el),1)}))
   }
 
+  //начало перетаскивания
+  DragStart=(e,idx)=>{
+    this.dragItem=this.state.dots[idx];
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/html", e.target);
+    // e.dataTransfer.setDragImage(e.target, -20, -20);
+  }
+
+  //обработка переноса
+  DragOver=(idx)=>{
+    const draggedOverItem = this.state.dots[idx];
+    //если совпадает с текущем значением ничего не делаем
+    if (this.dragItem === draggedOverItem) {return}
+    // console.log(draggedOverItem, this.dragItem)
+
+    //отфильтровываем текущий элемент из массива
+    let _dots = this.state.dots.filter(item => item !== this.dragItem);
+    this.setState((state)=>({...state, dots:_dots}))
+
+    //добавляем элемент в массив
+    this.setState(state=>({...state.dots.splice(idx,0,this.dragItem)}))
+  }
+
+  //окончание переноса
+  DragEnd = () => {
+    this.dragItem= null;
+  };
+
   render(){
 
     return (
@@ -33,6 +61,9 @@ class App extends React.Component {
           dots={this.state.dots} 
           setNameDot={this.setNameDot}
           DeleteDot={this.DeleteDot}
+          DragStart={this.DragStart}
+          DragOver={this.DragOver}
+          DragEnd={this.DragEnd}
           />
         <MapView/>
       </div>
