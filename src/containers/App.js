@@ -65,7 +65,8 @@ class App extends React.Component {
           DragOver={this.DragOver}
           DragEnd={this.DragEnd}
           />
-        <MapView/>
+        <MapView
+          />
       </div>
     )
   }

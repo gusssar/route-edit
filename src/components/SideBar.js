@@ -49,7 +49,7 @@ export class SideBar extends React.Component {
         ):<div></div>
 
         return(
-            <div>
+            <div className='sidebar'>
                 <input 
                     placeholder='input'
                     onKeyPress={this.onPressEnter}

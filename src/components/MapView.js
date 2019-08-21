@@ -6,7 +6,7 @@ export class MapView extends React.Component {
         // const { nameDot } = this.props
 
         return(
-            <div>
+            <div className='mapview'>
                 {/* <div>{nameDot}</div> */}
             </div>
         )
