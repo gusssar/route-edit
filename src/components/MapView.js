@@ -2,12 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 export class MapView extends React.Component {
+
     render(){
-        // const { nameDot } = this.props
 
         return(
             <div className='mapview'>
-                {/* <div>{nameDot}</div> */}
+                <div id="map" style={{width:'100%', height:'100%'}}></div>
             </div>
         )
     }

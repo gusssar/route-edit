@@ -8,13 +8,22 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state={
-        dots:[{name:'aaa',x:'0',y:'0'},{name:'bbb',x:'0',y:'0'}],
+        dots:[],
+        currentCenter:[],
     }
   }
 
   //добавление новой точки
   setNameDot=(obj_name) => {
     this.setState(state=>({...state.dots.push(obj_name)}))
+
+    window.myMap.geoObjects
+        .add(new window.ymaps.Placemark([obj_name.x, obj_name.y], {
+            balloonContent: 'точка <strong>'+obj_name.name+'</strong>'
+        }, {
+            preset: 'islands#icon',
+            iconColor: '#0095b6'
+        }))
   }
 
   //удаление точки
@@ -53,8 +62,21 @@ class App extends React.Component {
     this.dragItem= null;
   };
 
-  render(){
+  componentDidMount() {
+    window.addEventListener('load', this.handleLoad);
+  }
+  
+  handleLoad() {
+    window.ymaps.ready(() => {
+        this.myMap = new window.ymaps.Map('map', {center: [55.75, 37.57], zoom: 12}, {
+        searchControlProvider: 'yandex#search'});
+        console.log(this.myMap)
 
+    });
+
+  }
+
+  render(){
     return (
       <div className="app">
         <SideBar 

@@ -4,10 +4,11 @@ import PropTypes from 'prop-types'
 export class SideBar extends React.Component {
     onPressEnter=event=>{
         if(event.key==='Enter'){
+            const currentCenter=window.myMap.getCenter();
             const item_dot={
                 name: event.target.value,
-                x:'1',
-                y:'2',
+                x: currentCenter[0],
+                y: currentCenter[1],
             };
             event.target.value='';
             this.props.setNameDot(item_dot);
@@ -33,7 +34,6 @@ export class SideBar extends React.Component {
     render(){
 
         const { dots } = this.props;
-        // console.log('dots',dots)
 
         const item=(dots)?dots.map((el,idx)=>
             <div 
