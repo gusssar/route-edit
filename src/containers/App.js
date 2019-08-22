@@ -16,14 +16,6 @@ class App extends React.Component {
   //добавление новой точки
   setNameDot=(obj_name) => {
     this.setState(state=>({...state.dots.push(obj_name)}))
-
-    window.myMap.geoObjects
-        .add(new window.ymaps.Placemark([obj_name.x, obj_name.y], {
-            balloonContent: 'точка <strong>'+obj_name.name+'</strong>'
-        }, {
-            preset: 'islands#icon',
-            iconColor: '#0095b6'
-        }))
   }
 
   //удаление точки
@@ -39,7 +31,6 @@ class App extends React.Component {
     this.dragItem=this.state.dots[idx];
     e.dataTransfer.effectAllowed = "move";
     e.dataTransfer.setData("text/html", e.target);
-    // e.dataTransfer.setDragImage(e.target, -20, -20);
   }
 
   //обработка переноса
@@ -62,6 +53,72 @@ class App extends React.Component {
     this.dragItem= null;
   };
 
+  //Обработка точек на карте
+  AddDots = (_arr) => {
+  //сооздаём группу оъектов
+  var myGroup = new window.ymaps.GeoObjectCollection();
+
+    // Добавляем в группу метки и линию.
+    _arr.forEach((el)=> myGroup.add(
+      new window.ymaps.Placemark(
+        [el.x, el.y], 
+        {balloonContent: el.name}, 
+        {draggable:true}
+      )
+    ));
+
+    //набрасываем слушатель окончания переноса на колекцию
+    myGroup.events.add("dragend", (event)=>this.DragMap(event));
+
+    // Добавляем группу на карту.
+    window.myMap.geoObjects.add(myGroup);
+  };
+
+  //Обработка ломаной на карте
+  AddPolyline = (_arr) => {
+    if(_arr.length>1){
+      const arr=_arr.map((el)=>[el.x, el.y])
+
+      var myPolyline = new window.ymaps.Polyline(
+            // Указываем координаты вершин ломаной.
+            arr, {
+            // Описываем свойства геообъекта.
+            // Содержимое балуна.
+            balloonContent: "Ломаная линия"
+        }, {
+            // Задаем опции геообъекта.
+            // Отключаем кнопку закрытия балуна.
+            balloonCloseButton: false,
+            // Цвет линии.
+            strokeColor: "#000000",
+            // Ширина линии.
+            strokeWidth: 4,
+            // Коэффициент прозрачности.
+            strokeOpacity: 0.5
+        });
+
+        // Добавляем ломаную на карту.
+        window.myMap.geoObjects.add(myPolyline);
+    }
+  }
+
+  //Обработка переноса на карте
+  DragMap = (event) => {
+      let arr = this.state.dots.map(
+        (el) => {
+          if(event.get('target').properties._data.balloonContent===el.name){
+            return el={
+              ...el,
+              x:event.get('target').geometry.getCoordinates()[0],
+              y:event.get('target').geometry.getCoordinates()[1]
+            }
+          } else return el
+        }
+      )
+
+      this.setState(state => ({...state, dots:arr}))
+  }
+
   componentDidMount() {
     window.addEventListener('load', this.handleLoad);
   }
@@ -70,10 +127,7 @@ class App extends React.Component {
     window.ymaps.ready(() => {
         this.myMap = new window.ymaps.Map('map', {center: [55.75, 37.57], zoom: 12}, {
         searchControlProvider: 'yandex#search'});
-        console.log(this.myMap)
-
     });
-
   }
 
   render(){
@@ -88,6 +142,9 @@ class App extends React.Component {
           DragEnd={this.DragEnd}
           />
         <MapView
+          dots={this.state.dots}
+          AddDots={this.AddDots}
+          AddPolyline={this.AddPolyline}
           />
       </div>
     )
