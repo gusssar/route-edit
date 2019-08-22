@@ -1,4 +1,6 @@
-import React from 'react'
+import React from 'react';
+
+import './index.css';
 
 export class MapView extends React.Component {
 
@@ -17,7 +19,7 @@ export class MapView extends React.Component {
 
         return(
             <div className='mapview'>
-                <div id="map" style={{width:'100%', height:'100%'}}></div>
+                <div id="map"></div>
             </div>
         )
     }

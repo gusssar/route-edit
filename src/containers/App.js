@@ -1,6 +1,6 @@
 import React from 'react'
 import { SideBar } from '../components/SideBar/index'
-import { MapView } from '../components/MapView'
+import { MapView } from '../components/MapView/index'
 
 import './App.css';
 
@@ -82,17 +82,11 @@ class App extends React.Component {
       var myPolyline = new window.ymaps.Polyline(
             // Указываем координаты вершин ломаной.
             arr, {
-            // Описываем свойства геообъекта.
-            // Содержимое балуна.
-            balloonContent: "Ломаная линия"
-        }, {
             // Задаем опции геообъекта.
-            // Отключаем кнопку закрытия балуна.
-            balloonCloseButton: false,
             // Цвет линии.
             strokeColor: "#000000",
             // Ширина линии.
-            strokeWidth: 4,
+            strokeWidth: 2,
             // Коэффициент прозрачности.
             strokeOpacity: 0.5
         });
