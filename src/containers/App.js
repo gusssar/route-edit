@@ -1,5 +1,5 @@
 import React from 'react'
-import { SideBar } from '../components/SideBar'
+import { SideBar } from '../components/SideBar/index'
 import { MapView } from '../components/MapView'
 
 import './App.css';

@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import './index.css';
+
 export class SideBar extends React.Component {
     onPressEnter=event=>{
         if(event.key==='Enter'){
@@ -36,7 +38,9 @@ export class SideBar extends React.Component {
         const { dots } = this.props;
 
         const item=(dots)?dots.map((el,idx)=>
+            <li className='sidebar__items__item'>
             <div 
+                className='item__name'
                 key={idx}
                 draggable
                 onDragStart={(e)=>this.DragStart(e, idx)}
@@ -44,17 +48,25 @@ export class SideBar extends React.Component {
                 onDragEnd={this.DragEnd}
                 >
                     {el.name}
-                    <button onClick={()=>this.onDel(el)}>удалить {el.name}</button>
             </div>
+            <div 
+                className='item__close'
+                onClick={()=>this.onDel(el)}
+                >X</div>
+            </li>
         ):<div></div>
 
         return(
             <div className='sidebar'>
+                <div className='sidebar__title'>Список точек маршрута</div>
                 <input 
-                    placeholder='input'
+                    className='sidebar__input'
+                    placeholder='Новая точка маршрута'
                     onKeyPress={this.onPressEnter}
                 ></input>
-                {item}
+                <ul className='sidebar__items'>
+                    {item}
+                </ul>
             </div>
         )
     }
