@@ -35,6 +35,7 @@
     background: rgb(250, 218, 131);
 
     cursor: move;
+    user-select: none;
 }
 
 .item__name{

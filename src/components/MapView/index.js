@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './index.css';
 
@@ -23,4 +24,10 @@ export class MapView extends React.Component {
             </div>
         )
     }
+}
+
+MapView.protoType = {
+    dots: PropTypes.array.isRequired,
+    AddDots: PropTypes.func.isRequired,
+    AddPolyline: PropTypes.func.isRequired,
 }

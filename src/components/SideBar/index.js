@@ -1,5 +1,5 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import './index.css';
 
@@ -38,21 +38,22 @@ export class SideBar extends React.Component {
         const { dots } = this.props;
 
         const item=(dots)?dots.map((el,idx)=>
-            <li className='sidebar__items__item'>
-            <div 
-                className='item__name'
-                key={idx}
-                draggable
-                onDragStart={(e)=>this.DragStart(e, idx)}
-                onDragOver={() => this.DragOver(idx)}
-                onDragEnd={this.DragEnd}
-                >
-                    {el.name}
-            </div>
-            <div 
-                className='item__close'
-                onClick={()=>this.onDel(el)}
-                >X</div>
+            <li 
+                className='sidebar__items__item'
+                key={idx}>
+                <div 
+                    className='item__name'
+                    draggable
+                    onDragStart={(e)=>this.DragStart(e, idx)}
+                    onDragOver={() => this.DragOver(idx)}
+                    onDragEnd={this.DragEnd}
+                    >
+                        {el.name}
+                </div>
+                <div 
+                    className='item__close'
+                    onClick={()=>this.onDel(el)}
+                    >X</div>
             </li>
         ):<div></div>
 
@@ -73,7 +74,10 @@ export class SideBar extends React.Component {
 }
 
 SideBar.propType = {
-    setNameDot : PropTypes.func.isRequired,
-    DeleteDot : PropTypes.func.isRequired,
     dots: PropTypes.array.isRequired,
+    setNameDot: PropTypes.func.isRequired,
+    DeleteDot: PropTypes.func.isRequired,
+    DragStart: PropTypes.func.isRequired,
+    DragOver: PropTypes.func.isRequired,
+    DragEnd: PropTypes.func.isRequired,
 }
